@@ -9,9 +9,27 @@ const parrots_tuple = [
     [`<img src="imagens/unicornparrot.gif">`, 0]
 ];
 let numofCards = 0;
+let selectedCards = "";
+let contadorJogadas = 0;
+let id;
+let segundos = 0;
+let cardMatches = 0;
 
-function howManyCards() {
+function incrementarSegundos() {
+    document.querySelector(".segundos").innerHTML = segundos;
+    segundos++;
+    //condição de vitória
+    if (cardMatches == numofCards) {
+        clearInterval(id);
+        alert("Você venceu em " + contadorJogadas + " jogadas");
+        let elemento = document.querySelector(".reset-game");
+        elemento.classList.remove("hidden");
+    }
 
+}
+
+function startGame() {
+    id = setInterval(incrementarSegundos, 1000);
     let numofCards = prompt("Com quantas cartas você quer jogar ?");
     while (numofCards > 14 || numofCards < 4 || numofCards % 2 !== 0) {
         alert("Número Inválido. Selecione um número par entre 4 e 14.")
@@ -56,12 +74,52 @@ function change_img() {
 }
 
 function flipCard(elemento) {
+    contadorJogadas++;
+    document.querySelector(".jogadas").innerHTML = contadorJogadas;
     elemento.classList.add("selected");
+    //se não há carta selecionada
+    if (selectedCards === "") {
+        selectedCards = elemento;
+        // se já houver carta selecionada
+    } else {
 
+        // se acertar
+        if (selectedCards.innerHTML === elemento.innerHTML) {
+            setTimeout(keepOpened, 250, elemento, selectedCards)
+            selectedCards = "";
+            //se errar
+        } else {
+            setTimeout(voltarCartas, 1000, elemento, selectedCards);
+            selectedCards = "";
+        }
+
+    }
+}
+
+function keepOpened(elemento, selectedCards) {
+    selectedCards.classList.add("stay-flipped");
+    elemento.classList.add("stay-flipped");
+    cardMatches += 2;
+    selectedCards.classList.remove("selected");
+    elemento.classList.remove("selected");
+    selectedCards = "";
+    elemento = "";
+}
+
+function voltarCartas(elemento, selectedCards) {
+    elemento.classList.remove("selected");
+    elemento = selectedCards;
+    elemento.classList.remove("selected");
+    selectedCards = "";
+    elemento = "";
 }
 
 function shuffler() {
     return Math.random() - 0.5;
 }
 
-howManyCards();
+startGame();
+
+function jogada() {
+
+}
