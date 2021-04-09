@@ -1,4 +1,3 @@
-// const parrots = [`<img src="imagens/bobrossparrot.gif">`, `<img src="imagens/explodyparrot.gif">`, `<img src="imagens/fiestaparrot.gif">`, `<img src="imagens/metalparrot.gif">`, `<img src="imagens/revertitparrot.gif">`, `<img src="imagens/tripletsparrot.gif">`, `<img src="imagens/unicornparrot.gif">`];
 const parrots_tuple = [
     [`<img src="imagens/bobrossparrot.gif">`, 0],
     [`<img src="imagens/explodyparrot.gif">`, 0],
@@ -119,7 +118,3 @@ function shuffler() {
 }
 
 startGame();
-
-function jogada() {
-
-}
