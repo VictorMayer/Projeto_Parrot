@@ -75,8 +75,8 @@ function change_img() {
 function flipCard(elemento) {
     contadorJogadas++;
     document.querySelector(".jogadas").innerHTML = contadorJogadas;
+    // verifica se não há carta selecionada
     elemento.classList.add("selected");
-    //se não há carta selecionada
     if (selectedCards === "") {
         selectedCards = elemento;
         // se já houver carta selecionada
@@ -84,7 +84,7 @@ function flipCard(elemento) {
 
         // se acertar
         if (selectedCards.innerHTML === elemento.innerHTML) {
-            setTimeout(keepOpened, 250, elemento, selectedCards)
+            setTimeout(stayFlipped, 250, elemento, selectedCards)
             selectedCards = "";
             //se errar
         } else {
@@ -95,7 +95,7 @@ function flipCard(elemento) {
     }
 }
 
-function keepOpened(elemento, selectedCards) {
+function stayFlipped(elemento, selectedCards) {
     selectedCards.classList.add("stay-flipped");
     elemento.classList.add("stay-flipped");
     cardMatches += 2;
