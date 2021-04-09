@@ -73,8 +73,6 @@ function change_img() {
 }
 
 function flipCard(elemento) {
-    contadorJogadas++;
-    document.querySelector(".jogadas").innerHTML = contadorJogadas;
     // verifica se não há carta selecionada
     elemento.classList.add("selected");
     if (selectedCards === "") {
@@ -83,22 +81,36 @@ function flipCard(elemento) {
     } else {
 
         // se acertar
-        if (selectedCards.innerHTML === elemento.innerHTML) {
+        if ((selectedCards.innerHTML === elemento.innerHTML) && selectedCards.classList !== elemento.classList) {
             setTimeout(stayFlipped, 250, elemento, selectedCards)
             selectedCards = "";
+            contadorJogadas++;
+        } else if ((selectedCards.innerHTML === elemento.innerHTML) && selectedCards.classList === elemento.classList) {
+            setTimeout(voltarCarta, 500, selectedCards, elemento);
+            selectedCards = "";
+            contadorJogadas++;
             //se errar
         } else {
             setTimeout(voltarCartas, 1000, elemento, selectedCards);
             selectedCards = "";
+            contadorJogadas++;
         }
 
     }
+    document.querySelector(".jogadas").innerHTML = contadorJogadas;
 }
 
 function stayFlipped(elemento, selectedCards) {
     selectedCards.classList.add("stay-flipped");
     elemento.classList.add("stay-flipped");
     cardMatches += 2;
+    selectedCards.classList.remove("selected");
+    elemento.classList.remove("selected");
+    selectedCards = "";
+    elemento = "";
+}
+
+function voltarCarta(selectedCards, elemento) {
     selectedCards.classList.remove("selected");
     elemento.classList.remove("selected");
     selectedCards = "";
